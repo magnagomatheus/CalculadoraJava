@@ -7,10 +7,17 @@ import org.example.calculadora.view.Menu;
 
 public class Application {
     public static void main(String[] args) {
-        Menu menu = new Menu();
-        RequestDTO requestDTO = menu.show();
-        Controller controllerCalc = new Controller();
-        ResponseDTO responseDTO = controllerCalc.calc(requestDTO);
-        menu.showResult(responseDTO);
+        ResponseDTO responseDTO = null;
+        do {
+            Menu menu = new Menu();
+            RequestDTO requestDTO = menu.show();
+            Controller controllerCalc = new Controller();
+            responseDTO = controllerCalc.calc(requestDTO);
+            if(responseDTO.getResult() != -999) {
+                menu.showResult(responseDTO);
+            }
+        }while(responseDTO.getResult() != -999);
+
+
     }
 }

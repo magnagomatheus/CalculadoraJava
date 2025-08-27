@@ -2,21 +2,21 @@ package org.example.calculadora.view;
 
 import org.example.calculadora.dto.RequestDTO;
 import org.example.calculadora.dto.ResponseDTO;
-import org.example.calculadora.model.Operation;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.util.Scanner;
 
+import org.example.calculadora.model.operation.IOperation;
+import org.reflections.Reflections;
+import java.util.Set;
 
 
 public class Menu {
 
 
     public RequestDTO show(){
-        do {
-            this.showMenu();
-            return this.captureValues();
-        } while(this.captureValues() != null);
+        this.showMenu();
+        return this.captureValues();
     }
 
     private RequestDTO captureValues (){
@@ -34,24 +34,46 @@ public class Menu {
         return new RequestDTO(opcao,valor1,valor2);
     }
 
+    // Aplicar reflection aqui!!!
     private void showMenu(){
-        int cont = 1;
-        //System.out.println("0 - (SAIR)");
 
-        // Acessar todos os methodos declarados na classe Operation
-        for(Method m : Operation.class.getDeclaredMethods()) {
-            // If para ORDENAR, pois o reflection RETORNA em ordem ALEATORIA. (FICOU MT RUIM)
-            if(m.getName().equals("Soma")) {
-                cont = 1;
-            } else if(m.getName().equals("Subtracao")) {
-                cont = 2;
-            } else if(m.getName().equals("Multiplicacao")) {
-                cont = 3;
-            } else if(m.getName().equals("Divisao")) {
-                cont = 4;
+        // Utilizando a bilbioteca Reflections para percorrer todas as classes (operacoes neste caso) dentro de um determinado CD (caminho)
+        Reflections reflections = new Reflections("org.example.calculadora.model");
+
+        // Busca de todas as classes que implemento a interface IOperation
+        // Set --> Garante que nao haja classe repetida nesta lista de classes.
+        Set<Class<? extends IOperation>> classes = reflections.getSubTypesOf(IOperation.class);
+
+        System.out.println("---->Bem vindo!<----");
+        System.out.println("Escolha uma das opção:");
+        // Imprime o nome das classes que implementam a interface
+        int indice = 0;
+        // Class --> OBJ que contém as informações (metadados) de uma determinada classe
+        // <? extends IOperations> --> Any classe que seja uma subclasse de IOperation (extends)
+        // So, o obj Class ira conter as informações (metadados) de todas as classes que herdam IOperation.
+        for(Class<? extends IOperation> clazz : classes) {
+            String op_name = clazz.getSimpleName();
+            if(op_name.equals("Somar")) {
+                indice = 1;
+            } else if(op_name.equals("Subtrair")) {
+                indice = 2;
+            } else if(op_name.equals("Multiplicar")) {
+                indice = 3;
+            } else {
+                indice = 4;
             }
-            System.out.println(cont + " - " + "(" + m.getName() + ")");
+            System.out.println(indice + ") " + clazz.getSimpleName());
         }
+        System.out.println("0) Sair");
+
+
+
+        /*System.out.println("Escolha uma das opção:");
+        System.out.println("1 - Somar");
+        System.out.println("2 - Subtrair");
+        System.out.println("3 - Multiplicar");
+        System.out.println("4 - Dividir");
+        System.out.println("5 - Vá embora ...");*/
 
     }
 
