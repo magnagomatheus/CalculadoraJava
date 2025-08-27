@@ -11,7 +11,6 @@ public class Controller {
     public ResponseDTO calc(RequestDTO requestDTO){
 
         if (requestDTO == null) {
-            System.out.println("Encerrando!");
             return new ResponseDTO(-999);
         }
 
@@ -23,6 +22,7 @@ public class Controller {
 
         IOperation operation = null;
         // APPLYING REFLECTION AQUI MAYBE
+
         switch (requestDTO.getOpcao()) {
             case 1:
                 operation = new Somar();

@@ -62,7 +62,7 @@ public class Menu {
             } else {
                 indice = 4;
             }
-            System.out.println(indice + ") " + clazz.getSimpleName());
+            System.out.println(indice + ") " + op_name);
         }
         System.out.println("0) Sair");
 
@@ -78,7 +78,13 @@ public class Menu {
     }
 
     public void showResult (ResponseDTO responseDTO){
-        System.out.println("O Resultado é: "+responseDTO.getResult());
+        int r = responseDTO.getResult();
+
+        if(r == -999) {
+            System.out.println("Encerrando!");
+        } else {
+            System.out.println("O Resultado é: "+r);
+        }
     }
 
 
