@@ -12,7 +12,6 @@ import org.reflections.Reflections;
 
 public class Menu {
 
-
     public RequestDTO show(){
         this.showMenu();
         return this.captureValues();
@@ -44,7 +43,7 @@ public class Menu {
         Set<Class<? extends IOperation>> classes = reflections.getSubTypesOf(IOperation.class);
 
         // Conversao para lista para ordenação das operações.
-        List<Class<? extends IOperation>> operacoes = new ArrayList<>(classes);
+        ArrayList<Class<? extends IOperation>> operacoes = new ArrayList<>(classes);
 
         // Ordenando a lista em ordem alfabetica
         operacoes.sort(Comparator.comparing(Class::getSimpleName));
@@ -63,13 +62,6 @@ public class Menu {
         }
         System.out.println("0) Sair");
 
-        /*System.out.println("Escolha uma das opção:");
-        System.out.println("1 - Somar");
-        System.out.println("2 - Subtrair");
-        System.out.println("3 - Multiplicar");
-        System.out.println("4 - Dividir");
-        System.out.println("5 - Vá embora ...");*/
-
     }
 
     public void showResult (ResponseDTO responseDTO){
@@ -81,6 +73,5 @@ public class Menu {
             System.out.println("O Resultado é: "+r);
         }
     }
-
 
 }

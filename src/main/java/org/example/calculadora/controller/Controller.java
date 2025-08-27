@@ -10,7 +10,6 @@ import org.reflections.Reflections;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 
 public class Controller {
@@ -40,7 +39,7 @@ public class Controller {
         Set<Class<? extends IOperation>> classes = reflection.getSubTypesOf(IOperation.class);
 
         // Conversao para lista para ordenação das operações.
-        List<Class<? extends IOperation>> operacoes = new ArrayList<>(classes);
+        ArrayList<Class<? extends IOperation>> operacoes = new ArrayList<>(classes);
 
         // Ordenacao das operacoes pelos nomes, utilizando Comparator da biblioteca java.util
         operacoes.sort(Comparator.comparing(Class::getSimpleName));

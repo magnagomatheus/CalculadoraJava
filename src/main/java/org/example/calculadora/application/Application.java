@@ -15,7 +15,5 @@ public class Application {
             responseDTO = controllerCalc.calc(requestDTO);
             menu.showResult(responseDTO);
         }while(responseDTO.getResult() != -999);
-
-
     }
 }
