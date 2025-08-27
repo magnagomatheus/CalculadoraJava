@@ -4,11 +4,10 @@ import org.example.calculadora.dto.RequestDTO;
 import org.example.calculadora.dto.ResponseDTO;
 
 import java.lang.reflect.*;
-import java.util.Scanner;
+import java.util.*;
 
 import org.example.calculadora.model.operation.IOperation;
 import org.reflections.Reflections;
-import java.util.Set;
 
 
 public class Menu {
@@ -44,29 +43,25 @@ public class Menu {
         // Set --> Garante que nao haja classe repetida nesta lista de classes.
         Set<Class<? extends IOperation>> classes = reflections.getSubTypesOf(IOperation.class);
 
+        // Conversao para lista para ordenação das operações.
+        List<Class<? extends IOperation>> operacoes = new ArrayList<>(classes);
+
+        // Ordenando a lista em ordem alfabetica
+        operacoes.sort(Comparator.comparing(Class::getSimpleName));
+
         System.out.println("---->Bem vindo!<----");
         System.out.println("Escolha uma das opção:");
         // Imprime o nome das classes que implementam a interface
-        int indice = 0;
+        int indice = 1;
         // Class --> OBJ que contém as informações (metadados) de uma determinada classe
         // <? extends IOperations> --> Any classe que seja uma subclasse de IOperation (extends)
         // So, o obj Class ira conter as informações (metadados) de todas as classes que herdam IOperation.
         for(Class<? extends IOperation> clazz : classes) {
             String op_name = clazz.getSimpleName();
-            if(op_name.equals("Somar")) {
-                indice = 1;
-            } else if(op_name.equals("Subtrair")) {
-                indice = 2;
-            } else if(op_name.equals("Multiplicar")) {
-                indice = 3;
-            } else {
-                indice = 4;
-            }
             System.out.println(indice + ") " + op_name);
+            indice++;
         }
         System.out.println("0) Sair");
-
-
 
         /*System.out.println("Escolha uma das opção:");
         System.out.println("1 - Somar");
